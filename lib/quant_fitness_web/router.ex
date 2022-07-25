@@ -75,6 +75,9 @@ defmodule QuantFitnessWeb.Router do
     pipe_through [:browser, :require_authenticated_user]
 
     get "/dashboard", DashboardController, :index
+
+    get "/weight-tracker/weights/new", WeightTracker.WeightsController, :new
+
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email

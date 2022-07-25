@@ -1,12 +1,10 @@
 defmodule QuantFitnessWeb.DashboardControllerTest do
   use QuantFitnessWeb.ConnCase, async: true
 
-  alias QuantFitness.Accounts
-
   setup :register_and_log_in_user
 
   describe "GET /dashboard" do
-    test "renders settings page", %{conn: conn} do
+    test "renders the dashboard", %{conn: conn} do
       conn = get(conn, Routes.dashboard_path(conn, :index))
       response = html_response(conn, 200)
       assert response =~ "<h1>Dashboard</h1>"
