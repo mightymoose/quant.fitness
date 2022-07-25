@@ -76,7 +76,7 @@ defmodule QuantFitnessWeb.Router do
 
     get "/dashboard", DashboardController, :index
 
-    get "/weight-tracker/weights/new", WeightTracker.WeightsController, :new
+    resources "/weight-tracker/weights", WeightTracker.WeightsController, only: [:new, :create]
 
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update

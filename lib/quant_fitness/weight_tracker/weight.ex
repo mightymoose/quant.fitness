@@ -17,6 +17,7 @@ defmodule QuantFitness.WeightTracker.Weight do
   def changeset(weight, attrs) do
     weight
     |> cast(attrs, [:weight_in_pounds, :recorded_at, :user_id])
+    |> validate_number(:weight_in_pounds, greater_than: 0)
     |> validate_required([:weight_in_pounds, :recorded_at, :user_id])
   end
 end
