@@ -23,7 +23,12 @@ defmodule QuantFitness.WeightTrackerTest do
 
     test "create_weight/1 with valid data creates a weight" do
       user = user_fixture()
-      valid_attrs = %{user_id: user.id, recorded_at: ~U[2022-07-23 23:26:00.000000Z], weight_in_pounds: 120.5}
+
+      valid_attrs = %{
+        user_id: user.id,
+        recorded_at: ~U[2022-07-23 23:26:00.000000Z],
+        weight_in_pounds: 120.5
+      }
 
       assert {:ok, %Weight{} = weight} = WeightTracker.create_weight(valid_attrs)
       assert weight.user_id == user.id

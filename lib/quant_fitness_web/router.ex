@@ -19,8 +19,6 @@ defmodule QuantFitnessWeb.Router do
 
   scope "/", QuantFitnessWeb do
     pipe_through :browser
-
-    get "/", PageController, :index
   end
 
   # Other scopes may use custom stacks.
@@ -41,7 +39,7 @@ defmodule QuantFitnessWeb.Router do
     scope "/" do
       pipe_through :browser
 
-      live_dashboard "/dashboard", metrics: QuantFitnessWeb.Telemetry
+      live_dashboard "/admin/dashboard", metrics: QuantFitnessWeb.Telemetry
     end
   end
 
@@ -62,6 +60,7 @@ defmodule QuantFitnessWeb.Router do
   scope "/", QuantFitnessWeb do
     pipe_through [:browser, :redirect_if_user_is_authenticated]
 
+    get "/", PageController, :index
     get "/users/register", UserRegistrationController, :new
     post "/users/register", UserRegistrationController, :create
     get "/users/log_in", UserSessionController, :new
@@ -75,6 +74,7 @@ defmodule QuantFitnessWeb.Router do
   scope "/", QuantFitnessWeb do
     pipe_through [:browser, :require_authenticated_user]
 
+    get "/dashboard", DashboardController, :index
     get "/users/settings", UserSettingsController, :edit
     put "/users/settings", UserSettingsController, :update
     get "/users/settings/confirm_email/:token", UserSettingsController, :confirm_email
