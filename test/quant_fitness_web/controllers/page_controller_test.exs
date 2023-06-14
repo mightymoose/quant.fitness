@@ -1,5 +1,5 @@
 defmodule QuantFitnessWeb.PageControllerTest do
-  use QuantFitnessWeb.ConnCase
+  use QuantFitnessWeb.ConnCase, async: true
 
   test "GET /", %{conn: conn} do
     conn = get(conn, ~p"/")
