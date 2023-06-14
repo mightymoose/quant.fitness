@@ -1,0 +1,32 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"command": "mix test.watch",
+			"problemMatcher": [
+				"$mixCompileError",
+				"$mixCompileWarning",
+				"$mixTestFailure"
+			],
+			"group": {
+				"kind": "test",
+			},
+			"label": "mix: Run tests (watch)"
+		},
+		{
+			"type": "shell",
+			"command": "mix test",
+			"problemMatcher": [
+				"$mixCompileError",
+				"$mixCompileWarning",
+				"$mixTestFailure"
+			],
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			},
+			"label": "mix: Run tests"
+		}
+	]
+}
