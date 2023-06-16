@@ -18,6 +18,7 @@ defmodule QuantFitnessWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    live "/dashboard", DashboardLive, :index
   end
 
   # Other scopes may use custom stacks.
