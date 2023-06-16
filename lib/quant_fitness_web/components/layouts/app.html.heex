@@ -1,82 +1,23 @@
-<!--
-  This example requires updating your template:
-
-  ```
-  <html class="h-full bg-gray-100">
-  <body class="h-full">
-  ```
--->
-<div class="min-h-full">
+<div class="min-h-full" x-data="{ showMobileMenu: false }">
   <nav class="bg-indigo-600">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
       <div class="flex h-16 items-center justify-between">
         <div class="flex items-center">
-          <div class="flex-shrink-0">
-            <img
-              class="h-8 w-8"
-              src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=300"
-              alt="Your Company"
-            />
-          </div>
           <div class="hidden md:block">
-            <div class="ml-10 flex items-baseline space-x-4">
+            <div class="flex items-baseline space-x-4">
               <!-- Current: "bg-indigo-700 text-white", Default: "text-white hover:bg-indigo-500 hover:bg-opacity-75" -->
               <a
-                href="#"
+                href={~p"/dashboard"}
                 class="bg-indigo-700 text-white rounded-md px-3 py-2 text-sm font-medium"
                 aria-current="page"
               >
                 Dashboard
-              </a>
-              <a
-                href="#"
-                class="text-white hover:bg-indigo-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium"
-              >
-                Team
-              </a>
-              <a
-                href="#"
-                class="text-white hover:bg-indigo-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium"
-              >
-                Projects
-              </a>
-              <a
-                href="#"
-                class="text-white hover:bg-indigo-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium"
-              >
-                Calendar
-              </a>
-              <a
-                href="#"
-                class="text-white hover:bg-indigo-500 hover:bg-opacity-75 rounded-md px-3 py-2 text-sm font-medium"
-              >
-                Reports
               </a>
             </div>
           </div>
         </div>
         <div class="hidden md:block">
           <div class="ml-4 flex items-center md:ml-6">
-            <button
-              type="button"
-              class="rounded-full bg-indigo-600 p-1 text-indigo-200 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600"
-            >
-              <span class="sr-only">View notifications</span>
-              <svg
-                class="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                aria-hidden="true"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0"
-                />
-              </svg>
-            </button>
             <!-- Profile dropdown -->
             <div class="relative ml-3">
               <div>
@@ -148,6 +89,7 @@
           <!-- Mobile menu button -->
           <button
             type="button"
+            x-on:click="showMobileMenu = !showMobileMenu"
             class="inline-flex items-center justify-center rounded-md bg-indigo-600 p-2 text-indigo-200 hover:bg-indigo-500 hover:bg-opacity-75 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600"
             aria-controls="mobile-menu"
             aria-expanded="false"
@@ -155,7 +97,8 @@
             <span class="sr-only">Open main menu</span>
             <!-- Menu open: "hidden", Menu closed: "block" -->
             <svg
-              class="block h-6 w-6"
+              x-show="!showMobileMenu"
+              class="h-6 w-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.5"
@@ -170,7 +113,8 @@
             </svg>
             <!-- Menu open: "block", Menu closed: "hidden" -->
             <svg
-              class="hidden h-6 w-6"
+              x-show="showMobileMenu"
+              class="h-6 w-6"
               fill="none"
               viewBox="0 0 24 24"
               stroke-width="1.5"
@@ -183,40 +127,15 @@
         </div>
       </div>
     </div>
-    <!-- Mobile menu, show/hide based on menu state. -->
-    <div class="md:hidden" id="mobile-menu">
+    <div class="md:hidden" id="mobile-menu" x-show="showMobileMenu" x-cloak>
       <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
         <!-- Current: "bg-indigo-700 text-white", Default: "text-white hover:bg-indigo-500 hover:bg-opacity-75" -->
         <a
-          href="#"
+          href={~p"/dashboard"}
           class="bg-indigo-700 text-white block rounded-md px-3 py-2 text-base font-medium"
           aria-current="page"
         >
           Dashboard
-        </a>
-        <a
-          href="#"
-          class="text-white hover:bg-indigo-500 hover:bg-opacity-75 block rounded-md px-3 py-2 text-base font-medium"
-        >
-          Team
-        </a>
-        <a
-          href="#"
-          class="text-white hover:bg-indigo-500 hover:bg-opacity-75 block rounded-md px-3 py-2 text-base font-medium"
-        >
-          Projects
-        </a>
-        <a
-          href="#"
-          class="text-white hover:bg-indigo-500 hover:bg-opacity-75 block rounded-md px-3 py-2 text-base font-medium"
-        >
-          Calendar
-        </a>
-        <a
-          href="#"
-          class="text-white hover:bg-indigo-500 hover:bg-opacity-75 block rounded-md px-3 py-2 text-base font-medium"
-        >
-          Reports
         </a>
       </div>
       <div class="border-t border-indigo-700 pb-3 pt-4">
