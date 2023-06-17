@@ -3,6 +3,19 @@
 	"tasks": [
 		{
 			"type": "shell",
+			"command": "mix phx.server",
+			"problemMatcher": [
+				"$mixCompileError",
+				"$mixCompileWarning",
+				"$mixTestFailure"
+			],
+			"group": {
+				"kind": "none"
+			},
+			"label": "mix: Run development server"
+		},
+		{
+			"type": "shell",
 			"command": "mix test.watch",
 			"problemMatcher": [
 				"$mixCompileError",
