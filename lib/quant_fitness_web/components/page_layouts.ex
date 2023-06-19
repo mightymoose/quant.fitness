@@ -1,9 +1,9 @@
 defmodule QuantFitnessWeb.PageLayouts do
   use QuantFitnessWeb, :html
 
-  def header_link_active_class(selected_tab, selected_tab), do: "bg-indigo-700 text-white"
+  def link_active_class(selected_tab, selected_tab), do: "bg-indigo-700 text-white"
 
-  def header_link_active_class(_selected_tab, _tab),
+  def link_active_class(_selected_tab, _tab),
     do: "text-white hover:bg-indigo-500 hover:bg-opacity-75"
 
   def stacked(assigns) do
@@ -17,14 +17,14 @@ defmodule QuantFitnessWeb.PageLayouts do
                 <div class="flex items-baseline space-x-4">
                   <.link
                     href={~p"/dashboard"}
-                    class={"#{header_link_active_class(@selected_tab, "Dashboard")} rounded-md px-3 py-2 text-sm font-medium"}
+                    class={"#{link_active_class(@selected_tab, "Dashboard")} rounded-md px-3 py-2 text-sm font-medium"}
                     aria-current="page"
                   >
                     Dashboard
                   </.link>
                   <.link
                     href={~p"/exercises"}
-                    class={"#{header_link_active_class(@selected_tab, "Exercises")} rounded-md px-3 py-2 text-sm font-medium"}
+                    class={"#{link_active_class(@selected_tab, "Exercises")} rounded-md px-3 py-2 text-sm font-medium"}
                     aria-current="page"
                   >
                     Exercises
@@ -137,17 +137,16 @@ defmodule QuantFitnessWeb.PageLayouts do
         </div>
         <div class="md:hidden" id="mobile-menu" x-show="showMobileMenu" x-cloak>
           <div class="space-y-1 px-2 pb-3 pt-2 sm:px-3">
-            <!-- Current: "bg-indigo-700 text-white", Default: "text-white hover:bg-indigo-500 hover:bg-opacity-75" -->
             <a
               href={~p"/dashboard"}
-              class="bg-indigo-700 text-white block rounded-md px-3 py-2 text-base font-medium"
+              class={"#{link_active_class(@selected_tab, "Dashboard")} block rounded-md px-3 py-2 text-base font-medium"}
               aria-current="page"
             >
               Dashboard
             </a>
             <a
               href={~p"/exercises"}
-              class="bg-indigo-700 text-white block rounded-md px-3 py-2 text-base font-medium"
+              class={"#{link_active_class(@selected_tab, "Exercises")} block rounded-md px-3 py-2 text-base font-medium"}
               aria-current="page"
             >
               Exercises
