@@ -23,6 +23,13 @@ defmodule QuantFitnessWeb.PageLayouts do
                     Dashboard
                   </.link>
                   <.link
+                    href={~p"/workouts"}
+                    class={"#{link_active_class(@selected_tab, "Workouts")} rounded-md px-3 py-2 text-sm font-medium"}
+                    aria-current="page"
+                  >
+                    Workouts
+                  </.link>
+                  <.link
                     href={~p"/exercises"}
                     class={"#{link_active_class(@selected_tab, "Exercises")} rounded-md px-3 py-2 text-sm font-medium"}
                     aria-current="page"
@@ -34,7 +41,6 @@ defmodule QuantFitnessWeb.PageLayouts do
             </div>
             <div class="hidden md:block">
               <div class="ml-4 flex items-center md:ml-6">
-                <!-- Profile dropdown -->
                 <div class="relative ml-3" x-cloak>
                   <div>
                     <button
@@ -143,6 +149,13 @@ defmodule QuantFitnessWeb.PageLayouts do
               aria-current="page"
             >
               Dashboard
+            </a>
+            <a
+              href={~p"/workouts"}
+              class={"#{link_active_class(@selected_tab, "Workouts")} block rounded-md px-3 py-2 text-base font-medium"}
+              aria-current="page"
+            >
+              Workouts
             </a>
             <a
               href={~p"/exercises"}

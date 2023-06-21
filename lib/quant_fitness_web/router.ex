@@ -61,6 +61,7 @@ defmodule QuantFitnessWeb.Router do
     pipe_through [:browser, :require_authenticated_user]
 
     get "/exercises", ExerciseController, :index
+    get "/workouts", WorkoutController, :index
 
     live_session :require_authenticated_user,
       on_mount: [{QuantFitnessWeb.UserAuth, :ensure_authenticated}] do
