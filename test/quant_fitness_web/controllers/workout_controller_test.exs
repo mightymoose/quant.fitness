@@ -16,5 +16,12 @@ defmodule QuantFitnessWeb.WorkoutControllerTest do
              |> get(~p"/workouts")
              |> html_response(200)
     end
+
+    test "shows an empty state when the user can not see workouts", %{conn: conn} do
+      assert conn
+             |> log_in_user(user_fixture())
+             |> get(~p"/workouts")
+             |> html_response(200) =~ "No workouts"
+    end
   end
 end
