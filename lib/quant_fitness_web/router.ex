@@ -65,6 +65,7 @@ defmodule QuantFitnessWeb.Router do
 
     live_session :require_authenticated_user,
       on_mount: [{QuantFitnessWeb.UserAuth, :ensure_authenticated}] do
+      live "/workouts/new", WorkoutLive.New, :new
       live "/exercises/:id", ExerciseLive, :show
       live "/dashboard", DashboardLive, :index
       live "/users/settings", UserSettingsLive, :edit

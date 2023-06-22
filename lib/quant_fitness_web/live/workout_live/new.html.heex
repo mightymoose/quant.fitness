@@ -39,50 +39,26 @@
           </.link>
         </div>
       </li>
-    </ol>
-  </:header>
-  <%= if @workouts == [] do %>
-    <div class="text-center">
-      <h3 class="mt-2 text-sm font-semibold text-gray-900">No workouts</h3>
-      <p class="mt-1 text-sm text-gray-500">Get started by creating a new workout.</p>
-      <div class="mt-6">
-        <.link
-          href="/workouts/new"
-          type="button"
-          class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-        >
+      <li class="flex">
+        <div class="flex items-center">
           <svg
-            class="-ml-0.5 mr-1.5 h-5 w-5"
-            viewBox="0 0 20 20"
+            class="h-full w-6 flex-shrink-0 text-gray-200"
+            viewBox="0 0 24 44"
+            preserveAspectRatio="none"
             fill="currentColor"
             aria-hidden="true"
           >
-            <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+            <path d="M.293 0l22 22-22 22h1.414l22-22-22-22H.293z" />
           </svg>
-          New Workout
-        </.link>
-      </div>
-    </div>
-  <% else %>
-    <.link
-      href="/workouts/new"
-      type="button"
-      class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-    >
-      <svg
-        class="-ml-0.5 mr-1.5 h-5 w-5"
-        viewBox="0 0 20 20"
-        fill="currentColor"
-        aria-hidden="true"
-      >
-        <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
-      </svg>
-      New Workout
-    </.link>
-    <%= for _workout <- @workouts do %>
-      <div>
-        Workout!
-      </div>
-    <% end %>
-  <% end %>
+          <.link
+            href={~p"/workouts/new"}
+            class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700"
+          >
+            New
+          </.link>
+        </div>
+      </li>
+    </ol>
+  </:header>
+  New Workout!
 </QuantFitnessWeb.PageLayouts.stacked>
