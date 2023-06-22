@@ -13,6 +13,25 @@ defmodule QuantFitnessWeb.WorkoutControllerTest do
              |> redirected_to() == "/users/log_in"
     end
 
+    test "links to the create workout page when there are no visible workouts", %{conn: conn} do
+      user = user_fixture()
+
+      assert conn
+             |> log_in_user(user)
+             |> get(~p"/workouts")
+             |> html_response(200) =~ "/workouts/new"
+    end
+
+    test "links to the create workout page when there are visible workouts", %{conn: conn} do
+      workout = workout_fixture()
+      user = Accounts.get_user!(workout.user_id)
+
+      assert conn
+             |> log_in_user(user)
+             |> get(~p"/workouts")
+             |> html_response(200) =~ "/workouts/new"
+    end
+
     test "shows the workout list", %{conn: conn} do
       workout = workout_fixture()
       user = Accounts.get_user!(workout.user_id)
