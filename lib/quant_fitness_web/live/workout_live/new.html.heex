@@ -61,4 +61,9 @@
     </ol>
   </:header>
   New Workout!
+  <.live_component
+    module={QuantFitnessWeb.WorkoutLive.FormComponent}
+    id={@workout.id || :new}
+    workout={@workout}
+  />
 </QuantFitnessWeb.PageLayouts.stacked>

@@ -15,5 +15,12 @@ defmodule QuantFitnessWeb.WorkoutsLive.NewTest do
              |> get(~p"/workouts/new")
              |> html_response(200) =~ "New Workout!"
     end
+
+    test "shows a save button", %{conn: conn} do
+      assert conn
+             |> log_in_user(user_fixture())
+             |> get(~p"/workouts/new")
+             |> html_response(200) =~ "Save"
+    end
   end
 end
