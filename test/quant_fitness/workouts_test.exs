@@ -7,6 +7,21 @@ defmodule QuantFitness.WorkoutsTest do
   import QuantFitness.AccountsFixtures
   import QuantFitness.WorkoutsFeatures
 
+  describe "create_workout/1" do
+    test "returns the workout with valid values" do
+      attrs = valid_workout_attributes()
+      assert {:ok, workout} = Workouts.create_workout(attrs)
+
+      assert workout.user_id == attrs.user_id
+      assert workout.public == attrs.public
+    end
+
+    test "returns an error with invalid values" do
+      attrs = valid_workout_attributes()
+      assert {:error, _changeset} = Workouts.create_workout(%{attrs | user_id: nil})
+    end
+  end
+
   describe "visible_to_user/1" do
     test "returns non-public workouts belonging to the user" do
       workout = workout_fixture(%{public: false})
