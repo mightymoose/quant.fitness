@@ -7,4 +7,14 @@ defmodule QuantFitness.Workouts do
     |> Workout.visible_to_user(user)
     |> Repo.all()
   end
+
+  def create_workout(attrs) do
+    %Workout{}
+    |> Workout.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def change_workout(%Workout{} = workout, attrs \\ %{}) do
+    Workout.changeset(workout, attrs)
+  end
 end
