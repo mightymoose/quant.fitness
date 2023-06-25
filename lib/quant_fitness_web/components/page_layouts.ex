@@ -3,53 +3,54 @@ defmodule QuantFitnessWeb.PageLayouts do
 
   def columnar(assigns) do
     ~H"""
-    <!--
-    This example requires updating your template:
-
-    ```
-    <html class="h-full bg-white">
-    <body class="h-full">
-    ```
-    -->
-    <div>
-      <!-- Off-canvas menu for mobile, show/hide based on off-canvas menu state. -->
-      <div class="relative z-50 lg:hidden" role="dialog" aria-modal="true">
-        <!--
-      Off-canvas menu backdrop, show/hide based on off-canvas menu state.
-
-      Entering: "transition-opacity ease-linear duration-300"
-        From: "opacity-0"
-        To: "opacity-100"
-      Leaving: "transition-opacity ease-linear duration-300"
-        From: "opacity-100"
-        To: "opacity-0"
-    -->
-        <div class="fixed inset-0 bg-gray-900/80"></div>
+    <div x-data="{ showMobileMenu: false, showProfileDropdown: false }">
+      <div
+        x-cloak
+        x-show="showMobileMenu"
+        class="relative z-50 lg:hidden"
+        role="dialog"
+        aria-modal="true"
+      >
+        <div
+          x-transition:enter="transition-opacity ease-linear duration-300"
+          x-transition:enter-start="opacity-0"
+          x-transition:enter-end="opacity-100"
+          x-transition:leave="transition-opacity ease-linear duration-300"
+          x-transition:leave-start="opacity-100"
+          x-transition:leave-end="opacity-0"
+          x-cloak
+          x-show="showMobileMenu"
+          class="fixed inset-0 bg-gray-900/80"
+        >
+        </div>
 
         <div class="fixed inset-0 flex">
-          <!--
-        Off-canvas menu, show/hide based on off-canvas menu state.
-
-        Entering: "transition ease-in-out duration-300 transform"
-          From: "-translate-x-full"
-          To: "translate-x-0"
-        Leaving: "transition ease-in-out duration-300 transform"
-          From: "translate-x-0"
-          To: "-translate-x-full"
-      -->
-          <div class="relative mr-16 flex w-full max-w-xs flex-1">
-            <!--
-          Close button, show/hide based on off-canvas menu state.
-
-          Entering: "ease-in-out duration-300"
-            From: "opacity-0"
-            To: "opacity-100"
-          Leaving: "ease-in-out duration-300"
-            From: "opacity-100"
-            To: "opacity-0"
-        -->
-            <div class="absolute left-full top-0 flex w-16 justify-center pt-5">
-              <button type="button" class="-m-2.5 p-2.5">
+          <div
+            x-transition:enter="transition ease-in-out duration-300 transform"
+            x-transition:enter-start="-translate-x-full"
+            x-transition:enter-end="translate-x-0"
+            x-transition:leave="transition ease-in-out duration-300 transform"
+            x-transition:leave-start="translate-x-0"
+            x-transition:leave-end="-translate-x-full"
+            x-cloak
+            x-show="showMobileMenu"
+            class="relative mr-16 flex w-full max-w-xs flex-1"
+          >
+            <div
+              class="absolute left-full top-0 flex w-16 justify-center pt-5"
+              x-transition:enter="transition ease-in-out duration-300"
+              x-transition:enter-start="opacity-0"
+              x-transition:enter-end="opacity-100"
+              x-transition:leave="transition ease-in-out duration-300"
+              x-transition:leave-start="opacity-100"
+              x-transition:leave-end="opacity-0"
+            >
+              <button
+                show="showMobileMenu"
+                type="button"
+                class="-m-2.5 p-2.5"
+                x-on:click="showMobileMenu = false"
+              >
                 <span class="sr-only">Close sidebar</span>
                 <svg
                   class="h-6 w-6 text-white"
@@ -63,7 +64,6 @@ defmodule QuantFitnessWeb.PageLayouts do
                 </svg>
               </button>
             </div>
-            <!-- Sidebar component, swap this element with another sidebar if you like -->
             <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-white px-6 pb-2">
               <div class="flex h-16 shrink-0 items-center">
                 <img
@@ -475,7 +475,11 @@ defmodule QuantFitnessWeb.PageLayouts do
       </div>
 
       <div class="sticky top-0 z-40 flex items-center gap-x-6 bg-white px-4 py-4 shadow-sm sm:px-6 lg:hidden">
-        <button type="button" class="-m-2.5 p-2.5 text-gray-700 lg:hidden">
+        <button
+          type="button"
+          x-on:click="showMobileMenu = true"
+          class="-m-2.5 p-2.5 text-gray-700 lg:hidden"
+        >
           <span class="sr-only">Open sidebar</span>
           <svg
             class="h-6 w-6"
