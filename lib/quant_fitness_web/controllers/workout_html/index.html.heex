@@ -79,10 +79,12 @@
       </svg>
       New Workout
     </.link>
-    <%= for _workout <- @workouts do %>
-      <div>
-        Workout!
-      </div>
-    <% end %>
+    <div>
+      <%= for workout <- @workouts do %>
+        <.link href={~p"/workouts/#{workout.id}"}>
+          Workout!
+        </.link>
+      <% end %>
+    </div>
   <% end %>
 </QuantFitnessWeb.PageLayouts.stacked>
