@@ -4,12 +4,16 @@ defmodule QuantFitness.Exercises.Exercise do
   import Ecto.Query
 
   alias QuantFitness.Accounts.User
+  alias QuantFitness.WorkoutExercises.WorkoutExercise
 
   schema "exercises" do
     field :description, :string
     field :name, :string
     field :public, :boolean, default: false
     field :user_id, :id
+
+    has_many :workout_exercises, WorkoutExercise
+    has_many :workouts, through: [:workout_exercises, :workout]
 
     timestamps()
   end

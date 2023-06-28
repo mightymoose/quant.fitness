@@ -52,38 +52,38 @@ defmodule QuantFitness.ExercisesTest do
     end
   end
 
-  describe "get!/2" do
+  describe "get_exercise!/2" do
     test "raises when there is no matching exercise" do
       user = user_fixture()
-      assert_raise Ecto.NoResultsError, fn -> Exercises.get!(123, user) end
+      assert_raise Ecto.NoResultsError, fn -> Exercises.get_exercise!(123, user) end
     end
 
     test "raises for non-public exercises belonging to nobody" do
       user = user_fixture()
       exercise = exercise_fixture(%{public: false})
 
-      assert_raise Ecto.NoResultsError, fn -> Exercises.get!(exercise.id, user) end
+      assert_raise Ecto.NoResultsError, fn -> Exercises.get_exercise!(exercise.id, user) end
     end
 
     test "returns public exercises belonging to nobody" do
       user = user_fixture()
       exercise = exercise_fixture(%{public: true})
 
-      assert exercise == Exercises.get!(exercise.id, user)
+      assert exercise == Exercises.get_exercise!(exercise.id, user)
     end
 
     test "returns non-public exercises belonging to the user" do
       user = user_fixture()
       exercise = exercise_fixture(%{public: false, user_id: user.id})
 
-      assert exercise == Exercises.get!(exercise.id, user)
+      assert exercise == Exercises.get_exercise!(exercise.id, user)
     end
 
     test "returns public exercises belonging to the user" do
       user = user_fixture()
       exercise = exercise_fixture(%{public: true, user_id: user.id})
 
-      assert exercise == Exercises.get!(exercise.id, user)
+      assert exercise == Exercises.get_exercise!(exercise.id, user)
     end
 
     test "does not return non-public exercises not belonging to the user" do
@@ -91,7 +91,7 @@ defmodule QuantFitness.ExercisesTest do
       other_user = user_fixture()
       exercise = exercise_fixture(%{public: false, user_id: other_user.id})
 
-      assert_raise Ecto.NoResultsError, fn -> Exercises.get!(exercise.id, user) end
+      assert_raise Ecto.NoResultsError, fn -> Exercises.get_exercise!(exercise.id, user) end
     end
 
     test "returns public exercises not belonging to the user" do

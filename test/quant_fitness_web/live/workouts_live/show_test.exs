@@ -2,7 +2,7 @@ defmodule QuantFitnessWeb.WorkoutsLive.ShowTest do
   use QuantFitnessWeb.ConnCase, async: true
 
   import QuantFitness.AccountsFixtures
-  import QuantFitness.WorkoutsFeatures
+  import QuantFitness.WorkoutsFixtures
   import QuantFitness.ExercisesFixtures
 
   describe "GET /workouts/:id" do

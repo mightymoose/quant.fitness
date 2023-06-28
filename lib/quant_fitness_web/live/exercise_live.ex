@@ -5,6 +5,6 @@ defmodule QuantFitnessWeb.ExerciseLive do
 
   def mount(%{"id" => id}, _session, socket) do
     current_user = socket.assigns.current_user
-    {:ok, assign(socket, :exercise, Exercises.get!(id, current_user))}
+    {:ok, assign(socket, :exercise, Exercises.get_exercise!(id, current_user))}
   end
 end

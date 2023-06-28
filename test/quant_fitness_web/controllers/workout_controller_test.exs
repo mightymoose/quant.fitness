@@ -4,7 +4,7 @@ defmodule QuantFitnessWeb.WorkoutControllerTest do
   alias QuantFitness.Accounts
 
   import QuantFitness.AccountsFixtures
-  import QuantFitness.WorkoutsFeatures
+  import QuantFitness.WorkoutsFixtures
 
   describe "GET /workouts" do
     test "requires a user to be logged in", %{conn: conn} do
