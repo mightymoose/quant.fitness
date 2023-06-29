@@ -8,6 +8,12 @@ defmodule QuantFitness.Workouts do
     |> Repo.all()
   end
 
+  def get_workout!(id, user) do
+    Workout
+    |> Workout.visible_to_user(user)
+    |> Repo.get!(id)
+  end
+
   def create_workout(attrs) do
     %Workout{}
     |> Workout.changeset(attrs)

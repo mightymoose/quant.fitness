@@ -8,7 +8,7 @@ defmodule QuantFitness.Exercises do
     |> Repo.all()
   end
 
-  def get!(id, user) do
+  def get_exercise!(id, user) do
     Exercise
     |> Exercise.visible_to_user(user)
     |> Repo.get!(id)

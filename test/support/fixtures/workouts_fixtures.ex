@@ -1,4 +1,4 @@
-defmodule QuantFitness.WorkoutsFeatures do
+defmodule QuantFitness.WorkoutsFixtures do
   @moduledoc """
   This module defines test helpers for creating
   entities via the `QuantFitness.Workouts` context.
