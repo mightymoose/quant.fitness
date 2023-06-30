@@ -3,6 +3,7 @@ defmodule QuantFitnessWeb.WorkoutLive.Show do
 
   alias QuantFitness.Exercises
   alias QuantFitness.Workouts
+  alias QuantFitness.WorkoutExercises
 
   def mount(_params, _session, socket) do
     {:ok, socket}
@@ -13,6 +14,21 @@ defmodule QuantFitnessWeb.WorkoutLive.Show do
      socket
      |> assign(:workout, load_workout(id, socket))
      |> assign(:exercises, load_exercises(socket))}
+  end
+
+  def handle_event("add_exercise", %{"exercise_id" => exercise_id}, socket) do
+    %{workout: workout, current_user: current_user} = socket.assigns
+
+    case WorkoutExercises.create_workout_exercise(
+           %{workout_id: workout.id, exercise_id: exercise_id, position: [0, 0, 0]},
+           current_user
+         ) do
+      {:ok, _workout_exercise} ->
+        {:noreply, socket}
+
+      {:error, _} ->
+        {:noreply, socket}
+    end
   end
 
   defp load_exercises(socket) do

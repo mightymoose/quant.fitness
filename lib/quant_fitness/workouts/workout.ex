@@ -17,6 +17,12 @@ defmodule QuantFitness.Workouts.Workout do
     timestamps()
   end
 
+  def include_exercises(query) do
+    from(workout in query,
+      preload: :exercises
+    )
+  end
+
   @doc false
   def changeset(workout, attrs) do
     workout
