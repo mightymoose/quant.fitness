@@ -4,8 +4,28 @@ defmodule QuantFitnessWeb.WorkoutsLive.ShowTest do
   import QuantFitness.AccountsFixtures
   import QuantFitness.WorkoutsFixtures
   import QuantFitness.ExercisesFixtures
+  import Phoenix.LiveViewTest
+
+  alias QuantFitness.Workouts
 
   describe "GET /workouts/:id" do
+    test "allows adding exercises to the workout", %{conn: conn} do
+      exercise = exercise_fixture()
+      workout = workout_fixture()
+      user = user_fixture()
+
+      {:ok, lv, _html} =
+        conn
+        |> log_in_user(user)
+        |> live(~p"/workouts/#{workout.id}")
+
+      lv
+      |> element(~s|button:fl-contains("Add")|)
+      |> render_click()
+
+      assert [exercise] == Workouts.get_workout!(workout.id, user).exercises
+    end
+
     test "redirects to the log in page when nobody is logged in", %{conn: conn} do
       assert conn
              |> get(~p"/workouts/123")

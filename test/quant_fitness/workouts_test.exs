@@ -27,14 +27,16 @@ defmodule QuantFitness.WorkoutsTest do
       workout = workout_fixture(%{public: false})
       user = Accounts.get_user!(workout.user_id)
 
-      assert workout == Workouts.get_workout!(workout.id, user)
+      assert %{workout | exercises: [], workout_exercises: []} ==
+               Workouts.get_workout!(workout.id, user)
     end
 
     test "returns public workouts belonging to the user" do
       workout = workout_fixture(%{public: true})
       user = Accounts.get_user!(workout.user_id)
 
-      assert workout == Workouts.get_workout!(workout.id, user)
+      assert %{workout | exercises: [], workout_exercises: []} ==
+               Workouts.get_workout!(workout.id, user)
     end
 
     test "raises trying to load non-public workouts not belonging to the user" do
@@ -50,7 +52,8 @@ defmodule QuantFitness.WorkoutsTest do
       workout = workout_fixture(%{public: true})
       user = user_fixture()
 
-      assert workout == Workouts.get_workout!(workout.id, user)
+      assert %{workout | exercises: [], workout_exercises: []} ==
+               Workouts.get_workout!(workout.id, user)
     end
   end
 

@@ -11,12 +11,13 @@
               </p>
             </div>
           </div>
-          <a
-            href="#"
+          <button
+            phx-click="add_exercise"
+            phx-value-exercise_id={exercise.id}
             class="rounded-full bg-white px-2.5 py-1 text-xs font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
           >
             Add
-          </a>
+          </button>
         </li>
       <% end %>
     </ul>
