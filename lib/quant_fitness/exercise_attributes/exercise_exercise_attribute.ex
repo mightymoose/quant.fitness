@@ -2,9 +2,12 @@ defmodule QuantFitness.ExerciseAttributes.ExerciseExerciseAttribute do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias QuantFitness.Exercises.Exercise
+  alias QuantFitness.ExerciseAttributes.ExerciseAttribute
+
   schema "exercise_exercise_attributes" do
-    field :exercise_id, :id
-    field :exercise_attribute_id, :id
+    belongs_to :exercise, Exercise
+    belongs_to :exercise_attribute, ExerciseAttribute
 
     timestamps()
   end

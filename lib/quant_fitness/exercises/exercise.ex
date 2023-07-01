@@ -6,6 +6,8 @@ defmodule QuantFitness.Exercises.Exercise do
   alias QuantFitness.Accounts.User
   alias QuantFitness.WorkoutExercises.WorkoutExercise
 
+  alias QuantFitness.ExerciseAttributes.ExerciseExerciseAttribute
+
   schema "exercises" do
     field :description, :string
     field :name, :string
@@ -15,6 +17,9 @@ defmodule QuantFitness.Exercises.Exercise do
     has_many :workout_exercises, WorkoutExercise
     has_many :workouts, through: [:workout_exercises, :workout]
 
+    has_many :exercise_exercise_attributes, ExerciseExerciseAttribute
+    has_many :exercise_attributes, through: [:exercise_exercise_attributes, :exercise_attribute]
+
     timestamps()
   end
 
@@ -23,6 +28,12 @@ defmodule QuantFitness.Exercises.Exercise do
     exercise
     |> cast(attrs, [:name, :description, :public, :user_id])
     |> validate_required([:name, :description, :public])
+  end
+
+  def include_exercise_attributes(query) do
+    from(exercise in query,
+      preload: :exercise_attributes
+    )
   end
 
   def visible_to_user(query, %User{id: user_id}) do

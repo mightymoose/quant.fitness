@@ -11,6 +11,7 @@ defmodule QuantFitness.Exercises do
   def get_exercise!(id, user) do
     Exercise
     |> Exercise.visible_to_user(user)
+    |> Exercise.include_exercise_attributes()
     |> Repo.get!(id)
   end
 end

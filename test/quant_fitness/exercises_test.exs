@@ -69,21 +69,24 @@ defmodule QuantFitness.ExercisesTest do
       user = user_fixture()
       exercise = exercise_fixture(%{public: true})
 
-      assert exercise == Exercises.get_exercise!(exercise.id, user)
+      assert %{exercise | exercise_attributes: [], exercise_exercise_attributes: []} ==
+               Exercises.get_exercise!(exercise.id, user)
     end
 
     test "returns non-public exercises belonging to the user" do
       user = user_fixture()
       exercise = exercise_fixture(%{public: false, user_id: user.id})
 
-      assert exercise == Exercises.get_exercise!(exercise.id, user)
+      assert %{exercise | exercise_attributes: [], exercise_exercise_attributes: []} ==
+               Exercises.get_exercise!(exercise.id, user)
     end
 
     test "returns public exercises belonging to the user" do
       user = user_fixture()
       exercise = exercise_fixture(%{public: true, user_id: user.id})
 
-      assert exercise == Exercises.get_exercise!(exercise.id, user)
+      assert %{exercise | exercise_attributes: [], exercise_exercise_attributes: []} ==
+               Exercises.get_exercise!(exercise.id, user)
     end
 
     test "does not return non-public exercises not belonging to the user" do

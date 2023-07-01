@@ -60,4 +60,54 @@
       </li>
     </ol>
   </:header>
+
+  <div>
+    <div class="sm:hidden px-4">
+      <label for="tabs" class="sr-only">Select a tab</label>
+      <select
+        id="tabs"
+        name="tabs"
+        class="block w-full rounded-md border-gray-300 py-2 pl-3 pr-10 text-base focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
+      >
+        <option selected>Details</option>
+      </select>
+    </div>
+    <div class="hidden sm:block">
+      <div class="border-b border-gray-200">
+        <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+          <a
+            href="#"
+            class="border-indigo-500 text-indigo-600 whitespace-nowrap border-b-2 py-4 px-1 text-sm font-medium"
+            aria-current="page"
+          >
+            Details
+          </a>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <dl class="divide-y divide-gray-100">
+      <div class="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+        <dt class="text-sm font-medium leading-6 text-gray-900">Attributes</dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">
+          <ul role="list" class="divide-y divide-gray-100">
+            <%= for exercise_attribute <- @exercise.exercise_attributes do %>
+              <li class="flex items-center justify-between gap-x-6 py-5">
+                <div class="min-w-0">
+                  <p class="text-sm font-semibold leading-6 text-gray-900">
+                    <%= exercise_attribute.name %>
+                  </p>
+                  <div class="mt-1 flex items-center gap-x-2 text-xs leading-5 text-gray-500">
+                    <%= exercise_attribute.description %>
+                  </div>
+                </div>
+              </li>
+            <% end %>
+          </ul>
+        </dd>
+      </div>
+    </dl>
+  </div>
 </QuantFitnessWeb.PageLayouts.stacked>
