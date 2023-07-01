@@ -3,6 +3,7 @@ defmodule QuantFitness.WorkoutExercises do
   alias QuantFitness.Repo
   alias QuantFitness.Exercises
   alias QuantFitness.Workouts
+  alias QuantFitness.Workouts.WorkoutUpdates
   alias QuantFitness.WorkoutExercises.WorkoutExercise
 
   def create_workout_exercise(attrs, user) do
@@ -15,6 +16,7 @@ defmodule QuantFitness.WorkoutExercises do
     end)
     |> Multi.insert(:workout_exercise, WorkoutExercise.changeset(%WorkoutExercise{}, attrs))
     |> Repo.transaction()
+    |> maybe_broadcast_workout(user)
   end
 
   defp ensure_exercise_exists_and_is_visible(exercise_id, user) do
@@ -34,4 +36,12 @@ defmodule QuantFitness.WorkoutExercises do
       e in Ecto.NoResultsError -> {:error, e}
     end
   end
+
+  defp maybe_broadcast_workout({:ok, %{workout: workout}} = event, user) do
+    workout = Workouts.get_workout!(workout.id, user)
+    WorkoutUpdates.broadcast(workout)
+    event
+  end
+
+  defp maybe_broadcast_workout(event, _user), do: event
 end

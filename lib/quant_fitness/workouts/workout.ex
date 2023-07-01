@@ -19,7 +19,7 @@ defmodule QuantFitness.Workouts.Workout do
 
   def include_exercises(query) do
     from(workout in query,
-      preload: :exercises
+      preload: [workout_exercises: :exercise]
     )
   end
 

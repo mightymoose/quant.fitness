@@ -9,6 +9,26 @@ defmodule QuantFitnessWeb.WorkoutsLive.ShowTest do
   alias QuantFitness.Workouts
 
   describe "GET /workouts/:id" do
+    test "broadcasts updates when exercises are added", %{conn: conn} do
+      exercise_fixture()
+      workout = workout_fixture()
+      user = user_fixture()
+
+      {:ok, lv, _html} =
+        conn
+        |> log_in_user(user)
+        |> live(~p"/workouts/#{workout.id}")
+
+      Workouts.subscribe(workout, user)
+
+      lv
+      |> element(~s|button:fl-contains("Add")|)
+      |> render_click()
+
+      workout_id = workout.id
+      assert_receive %{id: ^workout_id}
+    end
+
     test "lists the exercises in the workout", %{conn: conn} do
       exercise = exercise_fixture()
       workout = workout_fixture()
@@ -51,7 +71,8 @@ defmodule QuantFitnessWeb.WorkoutsLive.ShowTest do
       |> element(~s|button:fl-contains("Add")|)
       |> render_click()
 
-      assert [exercise] == Workouts.get_workout!(workout.id, user).exercises
+      assert [%{exercise: ^exercise, position: [0, 0, 0]}] =
+               Workouts.get_workout!(workout.id, user).workout_exercises
     end
 
     test "redirects to the log in page when nobody is logged in", %{conn: conn} do

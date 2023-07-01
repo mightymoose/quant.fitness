@@ -27,7 +27,7 @@ defmodule QuantFitness.WorkoutsTest do
       workout = workout_fixture(%{public: false})
       user = Accounts.get_user!(workout.user_id)
 
-      assert %{workout | exercises: [], workout_exercises: []} ==
+      assert %{workout | workout_exercises: []} ==
                Workouts.get_workout!(workout.id, user)
     end
 
@@ -35,7 +35,7 @@ defmodule QuantFitness.WorkoutsTest do
       workout = workout_fixture(%{public: true})
       user = Accounts.get_user!(workout.user_id)
 
-      assert %{workout | exercises: [], workout_exercises: []} ==
+      assert %{workout | workout_exercises: []} ==
                Workouts.get_workout!(workout.id, user)
     end
 
@@ -52,7 +52,7 @@ defmodule QuantFitness.WorkoutsTest do
       workout = workout_fixture(%{public: true})
       user = user_fixture()
 
-      assert %{workout | exercises: [], workout_exercises: []} ==
+      assert %{workout | workout_exercises: []} ==
                Workouts.get_workout!(workout.id, user)
     end
   end
