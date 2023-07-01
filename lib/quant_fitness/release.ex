@@ -7,6 +7,8 @@ defmodule QuantFitness.Release do
 
   alias QuantFitness.Repo
   alias QuantFitness.Exercises.Exercise
+  alias QuantFitness.ExerciseAttributes.ExerciseAttribute
+  alias QuantFitness.ExerciseAttributes.ExerciseExerciseAttribute
 
   def migrate do
     load_app()
@@ -56,8 +58,78 @@ defmodule QuantFitness.Release do
       ]
       |> Enum.map(&Map.merge(&1, %{inserted_at: now, updated_at: now, public: true}))
 
+    exercise_attributes =
+      [
+        %{
+          id: 1,
+          name: "Weight",
+          description: "Weight",
+          type: "number"
+        },
+        %{
+          id: 2,
+          name: "Duration",
+          description: "Duration in seconds",
+          type: "duration-in-seconds"
+        },
+        %{
+          id: 3,
+          name: "Repetitions",
+          description: "Repetitions",
+          type: "positive-integer"
+        }
+      ]
+      |> Enum.map(&Map.merge(&1, %{inserted_at: now, updated_at: now}))
+
+    exercise_exercise_attributes =
+      [
+        %{
+          id: 1,
+          exercise_id: 1,
+          exercise_attribute_id: 1
+        },
+        %{
+          id: 2,
+          exercise_id: 1,
+          exercise_attribute_id: 3
+        },
+        %{
+          id: 3,
+          exercise_id: 2,
+          exercise_attribute_id: 1
+        },
+        %{
+          id: 4,
+          exercise_id: 2,
+          exercise_attribute_id: 3
+        },
+        %{
+          id: 5,
+          exercise_id: 5,
+          exercise_attribute_id: 1
+        },
+        %{
+          id: 6,
+          exercise_id: 5,
+          exercise_attribute_id: 3
+        }
+      ]
+      |> Enum.map(&Map.merge(&1, %{inserted_at: now, updated_at: now}))
+
     Exercise
     |> Repo.insert_all(exercises,
+      on_conflict: {:replace_all_except, [:id, :inserted_at, :updated_at]},
+      conflict_target: :id
+    )
+
+    ExerciseAttribute
+    |> Repo.insert_all(exercise_attributes,
+      on_conflict: {:replace_all_except, [:id, :inserted_at, :updated_at]},
+      conflict_target: :id
+    )
+
+    ExerciseExerciseAttribute
+    |> Repo.insert_all(exercise_exercise_attributes,
       on_conflict: {:replace_all_except, [:id, :inserted_at, :updated_at]},
       conflict_target: :id
     )
