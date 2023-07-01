@@ -1,6 +1,7 @@
 defmodule QuantFitness.Workouts do
   alias QuantFitness.Repo
   alias QuantFitness.Workouts.Workout
+  alias QuantFitness.Workouts.WorkoutUpdates
 
   def visible_to_user(user) do
     Workout
@@ -23,5 +24,15 @@ defmodule QuantFitness.Workouts do
 
   def change_workout(%Workout{} = workout, attrs \\ %{}) do
     Workout.changeset(workout, attrs)
+  end
+
+  def subscribe(workout, user) do
+    workout.id
+    |> get_workout!(user)
+    |> WorkoutUpdates.subscribe()
+  end
+
+  def unsubscribe(workout) do
+    WorkoutUpdates.unsubscribe(workout.id)
   end
 end

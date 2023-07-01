@@ -10,10 +10,22 @@ defmodule QuantFitnessWeb.WorkoutLive.Show do
   end
 
   def handle_params(%{"id" => id}, _uri, socket) do
+    workout = load_workout(id, socket)
+
+    if Map.has_key?(socket.assigns, :workout) do
+      Workouts.unsubscribe(socket.assigns.workout)
+    end
+
+    Workouts.subscribe(workout, socket.assigns.current_user)
+
     {:noreply,
      socket
-     |> assign(:workout, load_workout(id, socket))
+     |> assign(:workout, workout)
      |> assign(:exercises, load_exercises(socket))}
+  end
+
+  def handle_info(workout, socket) do
+    {:noreply, assign(socket, :workout, workout)}
   end
 
   def handle_event("add_exercise", %{"exercise_id" => exercise_id}, socket) do
