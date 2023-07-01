@@ -145,13 +145,14 @@ defmodule QuantFitnessWeb.PageLayouts do
                   href="#"
                   class="flex items-center gap-x-4 px-6 py-3 text-sm font-semibold leading-6 text-gray-900 hover:bg-gray-50"
                 >
-                  <img
-                    class="h-8 w-8 rounded-full bg-gray-50"
-                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                    alt=""
-                  />
+                  <span class="inline-block h-8 w-8 overflow-hidden rounded-full bg-gray-100">
+                    <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                  </span>
+
                   <span class="sr-only">Your profile</span>
-                  <span aria-hidden="true">Tom Cook</span>
+                  <span aria-hidden="true"><%= @current_user.username %></span>
                 </a>
               </li>
             </ul>
@@ -182,14 +183,51 @@ defmodule QuantFitnessWeb.PageLayouts do
           </svg>
         </button>
         <div class="flex-1 text-sm font-semibold leading-6 text-gray-900"><%= @selected_tab %></div>
-        <a href="#">
+        <button
+          type="button"
+          x-on:click="showProfileDropdown = !showProfileDropdown"
+          class="flex max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-indigo-600"
+          id="user-menu-button"
+          aria-expanded="false"
+          aria-haspopup="true"
+        >
           <span class="sr-only">Your profile</span>
-          <img
-            class="h-8 w-8 rounded-full bg-gray-50"
-            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            alt=""
-          />
+          <span class="inline-block h-8 w-8 overflow-hidden rounded-full bg-gray-100">
+            <svg class="h-full w-full text-gray-300" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M24 20.993V24H0v-2.996A14.977 14.977 0 0112.004 15c4.904 0 9.26 2.354 11.996 5.993zM16.002 8.999a4 4 0 11-8 0 4 4 0 018 0z" />
+            </svg>
+          </span>
+        </button>
+      </div>
+      <div
+        x-cloak
+        x-show="showProfileDropdown"
+        x-transition:enter="transition ease-out duration-100"
+        x-transition:enter-start="opacity-0 scale-95"
+        x-transition:enter-end="opacity-100 scale-100"
+        x-transition:leave="transition ease-in duration-100"
+        x-transition:leave-start="opacity-100 scale-100"
+        x-transition:leave-end="opacity-0 scale-95"
+        x-on:click.outside="showProfileDropdown = false"
+        class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+        role="menu"
+        aria-orientation="vertical"
+        aria-labelledby="user-menu-button"
+        tabindex="-1"
+      >
+        <!-- Active: "bg-gray-100", Not Active: "" -->
+        <a
+          href={~p"/users/settings"}
+          class="block px-4 py-2 text-sm text-gray-700"
+          role="menuitem"
+          tabindex="-1"
+          id="user-menu-item-1"
+        >
+          Settings
         </a>
+        <.link href={~p"/users/log_out"} method="delete" class="block px-4 py-2 text-sm text-gray-700">
+          Sign out
+        </.link>
       </div>
 
       <main class="lg:pl-72">
@@ -247,7 +285,7 @@ defmodule QuantFitnessWeb.PageLayouts do
             </div>
             <div class="hidden md:block">
               <div class="ml-4 flex items-center md:ml-6">
-                <div class="relative ml-3" x-cloak>
+                <div class="relative ml-3">
                   <div>
                     <button
                       type="button"
@@ -270,6 +308,7 @@ defmodule QuantFitnessWeb.PageLayouts do
                     </button>
                   </div>
                   <div
+                    x-cloak
                     x-show="showProfileDropdown"
                     x-transition:enter="transition ease-out duration-100"
                     x-transition:enter-start="opacity-0 scale-95"
