@@ -16,6 +16,12 @@ defmodule QuantFitness.Workouts do
     |> Repo.get!(id)
   end
 
+  def get_workout_owned_by_user!(id, user) do
+    Workout
+    |> Workout.owned_by_user(user)
+    |> Repo.get!(id)
+  end
+
   def create_workout(attrs) do
     %Workout{}
     |> Workout.changeset(attrs)

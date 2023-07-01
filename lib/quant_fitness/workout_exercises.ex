@@ -19,10 +19,29 @@ defmodule QuantFitness.WorkoutExercises do
     |> maybe_broadcast_workout(user)
   end
 
+  def delete_workout_exercise(%WorkoutExercise{} = workout_exercise, user) do
+    Multi.new()
+    |> Multi.run(:workout, fn _repo, _changes ->
+      ensure_workout_exists_and_is_owned_by_user(workout_exercise.workout_id, user)
+    end)
+    |> Multi.delete(:workout_exercise, workout_exercise)
+    |> Repo.transaction()
+    |> maybe_broadcast_workout(user)
+  end
+
   defp ensure_exercise_exists_and_is_visible(exercise_id, user) do
     try do
       exercise = Exercises.get_exercise!(exercise_id, user)
       {:ok, exercise}
+    rescue
+      e in Ecto.NoResultsError -> {:error, e}
+    end
+  end
+
+  defp ensure_workout_exists_and_is_owned_by_user(workout_id, user) do
+    try do
+      workout = Workouts.get_workout_owned_by_user!(workout_id, user)
+      {:ok, workout}
     rescue
       e in Ecto.NoResultsError -> {:error, e}
     end
