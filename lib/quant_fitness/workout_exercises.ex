@@ -12,7 +12,7 @@ defmodule QuantFitness.WorkoutExercises do
       ensure_exercise_exists_and_is_visible(attrs.exercise_id, user)
     end)
     |> Multi.run(:workout, fn _repo, _changes ->
-      ensure_workout_exists_and_is_visible(attrs.workout_id, user)
+      ensure_workout_exists_and_is_owned_by_user(attrs.workout_id, user)
     end)
     |> Multi.insert(:workout_exercise, WorkoutExercise.changeset(%WorkoutExercise{}, attrs))
     |> Repo.transaction()
@@ -41,15 +41,6 @@ defmodule QuantFitness.WorkoutExercises do
   defp ensure_workout_exists_and_is_owned_by_user(workout_id, user) do
     try do
       workout = Workouts.get_workout_owned_by_user!(workout_id, user)
-      {:ok, workout}
-    rescue
-      e in Ecto.NoResultsError -> {:error, e}
-    end
-  end
-
-  defp ensure_workout_exists_and_is_visible(workout_id, user) do
-    try do
-      workout = Workouts.get_workout!(workout_id, user)
       {:ok, workout}
     rescue
       e in Ecto.NoResultsError -> {:error, e}

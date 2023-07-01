@@ -11,8 +11,8 @@ defmodule QuantFitnessWeb.WorkoutsLive.ShowTest do
   describe "GET /workouts/:id" do
     test "broadcasts updates when exercises are added", %{conn: conn} do
       exercise_fixture()
-      workout = workout_fixture()
       user = user_fixture()
+      workout = workout_fixture(%{user_id: user.id})
 
       {:ok, lv, _html} =
         conn
@@ -31,8 +31,8 @@ defmodule QuantFitnessWeb.WorkoutsLive.ShowTest do
 
     test "lists the exercises in the workout", %{conn: conn} do
       exercise = exercise_fixture()
-      workout = workout_fixture()
       user = user_fixture()
+      workout = workout_fixture(%{user_id: user.id})
 
       {:ok, lv, html} =
         conn
@@ -59,8 +59,8 @@ defmodule QuantFitnessWeb.WorkoutsLive.ShowTest do
 
     test "allows adding exercises to the workout", %{conn: conn} do
       exercise = exercise_fixture()
-      workout = workout_fixture()
       user = user_fixture()
+      workout = workout_fixture(%{user_id: user.id})
 
       {:ok, lv, _html} =
         conn
