@@ -9,6 +9,34 @@ defmodule QuantFitnessWeb.WorkoutsLive.ShowTest do
   alias QuantFitness.Workouts
 
   describe "GET /workouts/:id" do
+    test "lists the exercises in the workout", %{conn: conn} do
+      exercise = exercise_fixture()
+      workout = workout_fixture()
+      user = user_fixture()
+
+      {:ok, lv, html} =
+        conn
+        |> log_in_user(user)
+        |> live(~p"/workouts/#{workout.id}")
+
+      assert html
+             |> Floki.find(~s|p:fl-contains("#{exercise.description}")|)
+             |> length() == 1
+
+      assert lv
+             |> element(~s|button:fl-contains("Add")|)
+             |> render_click()
+
+      {:ok, _lv, html} =
+        conn
+        |> log_in_user(user)
+        |> live(~p"/workouts/#{workout.id}")
+
+      assert html
+             |> Floki.find(~s|p:fl-contains("#{exercise.description}")|)
+             |> length() == 2
+    end
+
     test "allows adding exercises to the workout", %{conn: conn} do
       exercise = exercise_fixture()
       workout = workout_fixture()
