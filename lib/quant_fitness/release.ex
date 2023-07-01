@@ -46,7 +46,7 @@ defmodule QuantFitness.Release do
         %{
           id: 4,
           name: "Dumbbell Bench Press",
-          description: "Seated Row"
+          description: "Dummbell Bench Press"
         },
         %{
           id: 5,
