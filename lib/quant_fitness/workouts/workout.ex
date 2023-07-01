@@ -30,6 +30,12 @@ defmodule QuantFitness.Workouts.Workout do
     |> validate_required([:public, :user_id])
   end
 
+  def owned_by_user(query, %User{id: user_id}) do
+    from(workout in query,
+      where: workout.user_id == ^user_id
+    )
+  end
+
   def visible_to_user(query, %User{id: user_id}) do
     from(workout in query,
       where: workout.user_id == ^user_id or workout.public == true

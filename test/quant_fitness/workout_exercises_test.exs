@@ -7,7 +7,39 @@ defmodule QuantFitness.WorkoutExercisesTest do
   import QuantFitness.ExercisesFixtures
   import QuantFitness.WorkoutsFixtures
 
-  describe "create_workout_exercise/1" do
+  describe "delete_workout_exercises/2" do
+    test "deletes valid workout exercises" do
+      user = user_fixture()
+      exercise = exercise_fixture(%{user_id: user.id})
+      workout = workout_fixture(%{user_id: user.id})
+
+      {:ok, %{workout_exercise: workout_exercise}} =
+        WorkoutExercises.create_workout_exercise(
+          %{exercise_id: exercise.id, workout_id: workout.id, position: [1, 2, 3]},
+          user
+        )
+
+      assert {:ok, _details} = WorkoutExercises.delete_workout_exercise(workout_exercise, user)
+    end
+
+    test "returns an error without a workout id that the user can't see" do
+      user = user_fixture()
+      other_user = user_fixture()
+      exercise = exercise_fixture(%{user_id: user.id})
+      workout = workout_fixture(%{user_id: user.id, public: true})
+
+      {:ok, %{workout_exercise: workout_exercise}} =
+        WorkoutExercises.create_workout_exercise(
+          %{exercise_id: exercise.id, workout_id: workout.id, position: [1, 2, 3]},
+          user
+        )
+
+      assert {:error, :workout, _changeset, %{}} =
+               WorkoutExercises.delete_workout_exercise(workout_exercise, other_user)
+    end
+  end
+
+  describe "create_workout_exercise/2" do
     test "creates valid workout exercises" do
       user = user_fixture()
       exercise = exercise_fixture(%{user_id: user.id})
