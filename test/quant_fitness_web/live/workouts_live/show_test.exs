@@ -57,6 +57,34 @@ defmodule QuantFitnessWeb.WorkoutsLive.ShowTest do
              |> length() == 2
     end
 
+    test "allows removing exercises from the workout", %{conn: conn} do
+      user = user_fixture()
+      exercise = exercise_fixture()
+      workout = workout_fixture(%{user_id: user.id})
+
+      {:ok, lv, _html} =
+        conn
+        |> log_in_user(user)
+        |> live(~p"/workouts/#{workout.id}")
+
+      lv
+      |> element(~s|button:fl-contains("Add")|)
+      |> render_click()
+
+      lv
+      |> element(~s|button:fl-contains("Delete")|)
+      |> render_click()
+
+      {:ok, _lv, html} =
+        conn
+        |> log_in_user(user)
+        |> live(~p"/workouts/#{workout.id}")
+
+      assert html
+             |> Floki.find(~s|p:fl-contains("#{exercise.description}")|)
+             |> length() == 1
+    end
+
     test "allows adding exercises to the workout", %{conn: conn} do
       exercise = exercise_fixture()
       workout = workout_fixture()

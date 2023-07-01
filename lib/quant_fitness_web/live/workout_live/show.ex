@@ -28,6 +28,23 @@ defmodule QuantFitnessWeb.WorkoutLive.Show do
     {:noreply, assign(socket, :workout, workout)}
   end
 
+  def handle_event(
+        "delete_workout_exercise",
+        %{"workout_exercise_id" => workout_exercise_id},
+        socket
+      ) do
+    %{workout: workout, current_user: current_user} = socket.assigns
+    workout_exercise = Enum.find(workout.workout_exercises, &("#{&1.id}" == workout_exercise_id))
+
+    case WorkoutExercises.delete_workout_exercise(workout_exercise, current_user) do
+      {:ok, _} ->
+        {:noreply, socket}
+
+      {:error, _} ->
+        {:noreply, socket}
+    end
+  end
+
   def handle_event("add_exercise", %{"exercise_id" => exercise_id}, socket) do
     %{workout: workout, current_user: current_user} = socket.assigns
 
@@ -35,7 +52,7 @@ defmodule QuantFitnessWeb.WorkoutLive.Show do
            %{workout_id: workout.id, exercise_id: exercise_id, position: [0, 0, 0]},
            current_user
          ) do
-      {:ok, _workout_exercise} ->
+      {:ok, _} ->
         {:noreply, socket}
 
       {:error, _} ->
