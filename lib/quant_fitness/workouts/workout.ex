@@ -22,7 +22,7 @@ defmodule QuantFitness.Workouts.Workout do
       preload: [
         workout_exercises: [
           :exercise,
-          [workout_exercise_exercise_attributes: :exercise_attributes]
+          [workout_exercise_exercise_attributes: :exercise_attribute]
         ]
       ]
     )

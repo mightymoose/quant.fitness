@@ -12,7 +12,8 @@ defmodule QuantFitness.WorkoutExercises.WorkoutExercise do
     belongs_to :exercise, Exercise
     belongs_to :workout, Workout
 
-    has_many :workout_exercise_exercise_attributes, WorkoutExerciseExerciseAttribute
+    has_many :workout_exercise_exercise_attributes, WorkoutExerciseExerciseAttribute,
+      on_delete: :delete_all
 
     has_many :exercise_attributes,
       through: [:workout_exercise_exercise_attributes, :exercise_attribute]

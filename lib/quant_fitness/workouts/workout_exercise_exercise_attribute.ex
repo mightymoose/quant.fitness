@@ -18,6 +18,6 @@ defmodule QuantFitness.Workouts.WorkoutExerciseExerciseAttribute do
   def changeset(workout_exercise_exercise_attribute, attrs) do
     workout_exercise_exercise_attribute
     |> cast(attrs, [:value, :exercise_attribute_id, :workout_exercise_id])
-    |> validate_required([:value, :exercise_attribute_id, :workout_exercise_id])
+    |> validate_required([:exercise_attribute_id, :workout_exercise_id])
   end
 end
