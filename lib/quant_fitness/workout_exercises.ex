@@ -5,8 +5,13 @@ defmodule QuantFitness.WorkoutExercises do
   alias QuantFitness.Workouts
   alias QuantFitness.Workouts.WorkoutUpdates
   alias QuantFitness.WorkoutExercises.WorkoutExercise
+  alias QuantFitness.Workouts.WorkoutExerciseExerciseAttribute
 
   def create_workout_exercise(attrs, user) do
+    now =
+      NaiveDateTime.utc_now()
+      |> NaiveDateTime.truncate(:second)
+
     Multi.new()
     |> Multi.run(:exercise, fn _repo, _changes ->
       ensure_exercise_exists_and_is_visible(attrs.exercise_id, user)
@@ -15,6 +20,24 @@ defmodule QuantFitness.WorkoutExercises do
       ensure_workout_exists_and_is_owned_by_user(attrs.workout_id, user)
     end)
     |> Multi.insert(:workout_exercise, WorkoutExercise.changeset(%WorkoutExercise{}, attrs))
+    |> Multi.insert_all(
+      :workout_exercise_exercise_attributes,
+      WorkoutExerciseExerciseAttribute,
+      fn %{
+           workout_exercise: workout_exercise,
+           exercise: exercise
+         } ->
+        exercise.exercise_attributes
+        |> Enum.map(
+          &%{
+            workout_exercise_id: workout_exercise.id,
+            exercise_attribute_id: &1.id,
+            updated_at: now,
+            inserted_at: now
+          }
+        )
+      end
+    )
     |> Repo.transaction()
     |> maybe_broadcast_workout(user)
   end
